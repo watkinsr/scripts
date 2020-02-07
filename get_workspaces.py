@@ -25,7 +25,7 @@ windows = os.popen("wmctrl -l").readlines()
 used_windows = [int(re_ws.split(w)[1]) for w in windows]
 used_windows = set(used_windows)
 
-workspace_map = {"1": "dev", "2": "web(dev)", "3": "web(dev-2)", "4": "web", "5": "slack", "6": "vid", "7": "music", "8": "irc", "9": "read", "0": "sys"}
+workspace_map = {"1": "dev", "2": "mail", "3": "social", "4": "web", "5": "slack", "6": "vid", "7": "music", "8": "irc", "9": "read", "0": "sys"}
 
 def xmobar_color(s, col):
     ws = workspace_map[str(s)]
