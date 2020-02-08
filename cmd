@@ -7,7 +7,7 @@ title="Command: "
 sizeArgs=${#args}
 sizeTitle=${#title}
 size=$(( sizeArgs > sizeTitle ? sizeArgs : sizeTitle ))
-width=$((7 * size))
+width=$((8 * size))
 height=20
 
 Xaxis=$(xrandr --current | grep '*' | uniq | awk '{print $1}' | cut -d 'x' -f1)
