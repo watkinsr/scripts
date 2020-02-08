@@ -22,5 +22,5 @@ echo $xAdjust
 Yaxis=$(xrandr --current | grep '*' | uniq | awk '{print $1}' | cut -d 'x' -f2)
 Y=$(($Yaxis/2 - $(($Yaxis/$height))))
 
-{ echo $title; echo $args; } | dzen2 -p 1 -w $width -h $height -l 1 -x $X -y $Y -ta c -sa c -e 'onstart=uncollapse' -fn Iosevka-Slab -bg black
+{ echo $title; echo $args; } | dzen2 -p 1 -w $width -h $height -l 1 -x $X -y $Y -ta c -sa c -e 'onstart=uncollapse' -fn Iosevka-Slab -bg black &
 $args
