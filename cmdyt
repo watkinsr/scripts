@@ -1,0 +1,44 @@
+#!/bin/sh
+
+# Do the command and notify what it was
+args=`xclip -o -selection clipboard`
+
+echo $args
+
+title="Command: "
+sizeArgs=${#args}
+sizeTitle=${#title}
+size=$(( sizeArgs > sizeTitle ? sizeArgs : sizeTitle ))
+width=$((8 * size))
+height=20
+
+Xaxis=$(xrandr --current | grep '*' | uniq | awk '{print $1}' | cut -d 'x' -f1)
+xAdjust=$(echo $( echo "$(echo "$width / $Xaxis" | bc -l) * $(( $Xaxis / 2 ))" | bc -l) | awk '{print int($1+0.5)}')
+
+# echo $var | awk '{print int($1+0.5)}'
+
+X=$(($Xaxis/2  - $xAdjust))
+
+echo $xAdjust
+
+Yaxis=$(xrandr --current | grep '*' | uniq | awk '{print $1}' | cut -d 'x' -f2)
+Y=$(($Yaxis/2 - $(($Yaxis/$height))))
+
+if ! pgrep "mpv" >/dev/null 2>&1 ; then
+    mpv $args --input-ipc-server=/tmp/mpvsocket &
+else
+    # echo show-text ${playback-time}
+    echo loadfile $args append-play | socat - /tmp/mpvsocket
+fi
+
+sleep 2
+while :
+do
+    if pgrep "youtube-dl" >/dev/null 2>&1 ; then
+        width=400
+        { echo $title; echo "Watching: $args"; } | dzen2 -p 1 -u -w $width -h $height -l 1 -x $X -y $Y -ta c -sa c -e 'onstart=uncollapse' -fn Iosevka-Slab -bg black &
+    else
+        break
+    fi
+done
+# $args
