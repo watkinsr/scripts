@@ -17,10 +17,13 @@ xAdjust=$(echo $( echo "$(echo "$width / $Xaxis" | bc -l) * $(( $Xaxis / 2 ))" |
 
 X=$(($Xaxis/2  - $xAdjust))
 
-echo $xAdjust
+# echo $xAdjust
 
 Yaxis=$(xrandr --current | grep '*' | uniq | awk '{print $1}' | cut -d 'x' -f2)
 Y=$(($Yaxis/2 - $(($Yaxis/$height))))
 
+# Notify the command
 { echo $title; echo $args; } | dzen2 -p 1 -w $width -h $height -l 1 -x $X -y $Y -ta c -sa c -e 'onstart=uncollapse' -fn Iosevka-Slab -bg black &
+
+# Do the command
 $args

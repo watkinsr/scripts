@@ -5,4 +5,4 @@ if pgrep "synergy" >/dev/null 2>&1 ; then
 	pkill -9 synergy
 fi
 
-synergys
+synergys --config /home/ryan/.config/synergy.conf

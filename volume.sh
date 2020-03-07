@@ -1,7 +1,6 @@
 #!/bin/bash
-
-vol=$(pactl list sinks | grep '^[[:space:]]Volume:' | \
-	  head -n $(( $SINK + 1 )) | tail -n 1 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,')
+pactl list sinks | grep '^[[:space:]]Volume:' | \
+	      head -n $(( $SINK + 1 )) | tail -n 1 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,' | tr -d '\n'
 # function vol()
 # {
 #     while true
@@ -12,5 +11,3 @@ vol=$(pactl list sinks | grep '^[[:space:]]Volume:' | \
 # 	sleep 1
 #     done
 # }
-
-echo "VOL:${vol}%"
