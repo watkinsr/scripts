@@ -1,2 +1,5 @@
+(require :mcclim)
+(ql:quickload "doors")
 (require :doors)
+(defun climi::compile-time-clos-p (name) nil)
 (doors:doors)
