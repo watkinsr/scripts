@@ -1,0 +1,45 @@
+#!/bin/sh
+
+# Xephyr :3 -resizeable -screen 1366x768 &
+
+function doors_xephyr() {
+    echo "Xephyr function"
+    doas Xephyr -br -ac -noreset -screen 1366x740 :2 &
+    DISPLAY=:2 sh ~/scripts/input.sh &
+    DISPLAY=:2 sbcl --control-stack-size 1024 \
+     --dynamic-space-size 1024 \
+     --eval '(ql:quickload :doors)' \
+     --eval '(use-package :doors)' \
+     --eval '(defmethod clim:sheet-native-transformation ((x null)) climi::+identity-transformation+)' \
+     --eval '(doors:doors)' > $HOME/sbcl-doors.log 2>&1
+}
+
+usage="$(basename "$0") [-h] [-x] -- run the doors WM
+
+where:
+    -h  show this help text
+    -x  run inside xephyr"
+
+while getopts ':hx' option; do
+  case "$option" in
+    h) echo "$usage"
+       exit
+       ;;
+    x) doors_xephyr
+       exit
+       ;;
+   \?) printf "illegal option: -%s\n" "$OPTARG" >&2
+       echo "$usage" >&2
+       exit 1
+       ;;
+  esac
+done
+
+shift $((OPTIND - 1))
+
+sbcl --control-stack-size 1024 \
+     --dynamic-space-size 1024 \
+     --eval '(ql:quickload :doors)' \
+     --eval '(use-package :doors)' \
+     --eval '(defmethod clim:sheet-native-transformation ((x null)) climi::+identity-transformation+)' \
+     --eval '(doors:doors)' > $HOME/sbcl-doors.log 2>&1
