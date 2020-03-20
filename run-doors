@@ -4,8 +4,8 @@
 
 function doors_xephyr() {
     echo "Xephyr function"
-    doas Xephyr -br -ac -noreset -screen 1366x740 :2 &
-    DISPLAY=:2 sh ~/scripts/input.sh &
+    doas Xephyr -br -ac -noreset -screen 1350x740 :2 &
+    wait 1;
     DISPLAY=:2 sbcl --control-stack-size 1024 \
      --dynamic-space-size 1024 \
      --eval '(ql:quickload :doors)' \
