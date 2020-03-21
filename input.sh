@@ -1,4 +1,4 @@
-# setxkbmap -model 'pc104caw-zqu' -layout 'us(cmk_ed_us)' -option 'misc:extend,lv5:caps_switch_lock,grp:shifts_toggle,compose:menu,misc:cmk_curl_dh'
+setxkbmap -model 'pc104caw-zqu' -layout 'us(cmk_ed_us)' -option 'misc:extend,lv5:caps_switch_lock,grp:shifts_toggle,compose:menu,misc:cmk_curl_dh'
 
 # doas bash ~/Git/Projects/BigBagKbdTrixXKB/install-dreymar-xmod.sh -ox 4a us us
 # setxkbmap -option caps:escape -v us -variant colemak;
