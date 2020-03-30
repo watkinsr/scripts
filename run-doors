@@ -40,6 +40,7 @@ shift $((OPTIND - 1))
 sbcl --control-stack-size 1024 \
      --dynamic-space-size 1024 \
      --eval '(ql:quickload :doors)' \
-     --eval '(use-package :doors)' \
+     --eval '(ql:quickload :clim-examples)' \
+     --eval '(in-package :doors)' \
      --eval '(defmethod clim:sheet-native-transformation ((x null)) climi::+identity-transformation+)' \
      --eval '(doors:doors)' > $HOME/sbcl-doors.log 2>&1
