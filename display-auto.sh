@@ -1,27 +1,38 @@
 #!/bin/ksh
 
 # default monitor is LVDS-1
-MONITOR=LVDS-1
+if [ $HOST="acer-void" ]; then
+    echo "Acer detected"
+    MONITOR1=eDP1
+    MONITOR2=HDMI2
+elif [ $HOST="x230.home" ]; then
+    echo "X230 detected"
+    MONITOR1=LVDS-1
+    MONITOR2=VGA-1
+else
+    echo "ERROR: Unrecognised host to get monitors, expected acer/x230"
+    return -1
+fi;
 
-# functions to switch from LVDS-1 to VGA and vice versa
-function ActivateVGA {
-    xrandr --output VGA-1 --auto --output LVDS-1 --off
-    MONITOR=VGA-1
+# functions to switch from laptop to main monitor and vice versa
+ActivateMain() {
+    echo "Activate main"
+    xrandr --output $MONITOR2 --auto --output $MONITOR1 --off
 }
-function DeactivateVGA {
-    xrandr --output VGA-1 --off --output LVDS-1 --auto
-    MONITOR=LVDS-1
+ActivateLaptop() {
+    echo "Activate laptop"
+    xrandr --output $MONITOR1 --off --output $MONITOR2 --auto
 }
 
 # functions to check if VGA is connected and in use
-function VGAConnected {
-    ! xrandr | grep "^VGA-1" | grep disconnected
+MainNotConnected() {
+    ! xrandr | grep $MONITOR2 | grep disconnected
 }
 
 # actual script
-if VGAConnected
+if MainNotConnected
 then
-    ActivateVGA
+    ActivateMain
 else
-    DeactivateVGA
+    ActivateLaptop
 fi
