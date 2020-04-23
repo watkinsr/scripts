@@ -1,11 +1,15 @@
 #!/bin/ksh
 
 # default monitor is LVDS-1
-if [ $HOST="acer-void" ]; then
+
+HOST=$(uname -n)
+echo $HOST
+
+if [ $HOST == "acer-void" ]; then
     echo "Acer detected"
     MONITOR1=eDP1
     MONITOR2=HDMI2
-elif [ $HOST="x230.home" ]; then
+elif [ $HOST == "x230.home" ]; then
     echo "X230 detected"
     MONITOR1=LVDS-1
     MONITOR2=VGA-1
