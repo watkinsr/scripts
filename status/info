@@ -1,0 +1,18 @@
+#!/bin/ksh
+
+HOST=$(uname -n)
+while true
+do
+    if [ $HOST = "x230.home" ]; then
+        CPU=$(top -b -n1 | grep "CPUs" | awk 'NR==1{print $3}' | tr -d '\n')
+        BAT=$(apm | awk 'NR==1{print $4 " " $6 " " $7}')
+        STATUS="Cpu: $CPU | Bat: $BAT"
+        # echo $STATUS;
+        echo $STATUS > /tmp/status
+        sleep 1;
+    else
+        CPU=$(top -b -n1 | grep "Cpu(s)" | awk '{print $2 + $4}' | tr -d '\n')
+        echo "Cpu: "$CPU "|" > /tmp/status
+        sleep 1;
+    fi
+done
