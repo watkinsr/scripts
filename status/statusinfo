@@ -3,16 +3,21 @@
 HOST=$(uname -n)
 while true
 do
-    if [ $HOST = "x230.home" ]; then
+   if [ $HOST = "x230.home" ]; then
         CPU=$(top -b -n1 | grep "CPUs" | awk 'NR==1{print $3}' | tr -d '\n')
         BAT=$(apm | awk 'NR==1{print $4 " " $6 " " $7}')
         STATUS="Cpu: $CPU | Bat: $BAT"
         # echo $STATUS;
-        echo $STATUS > /tmp/status
         sleep 1;
     else
         CPU=$(top -b -n1 | grep "Cpu(s)" | awk '{print $2 + $4}' | tr -d '\n')
-        echo "Cpu: "$CPU "|" > /tmp/status
-        sleep 1;
+	MEM=$(free -h | sed -n '2{p;q}' | awk '{print $3 "/" $2}')
+	TIME=$(date '+%Y %b %d (%a) %I:%M%p')
+	WEATHER1=$( weather )
+	STATUS="Cpu: $CPU | Mem: $MEM | $TIME | $WEATHER1"
+        xsetroot -name "$STATUS"
+        sleep 2;
     fi
 done
+
+
