@@ -11,8 +11,8 @@ if [ $HOST == "acer-void" ]; then
     MONITOR2=HDMI2
 elif [ $HOST == "x230.home" ]; then
     echo "X230 detected"
-    MONITOR1=LVDS-1
-    MONITOR2=VGA-1
+    MONITOR1=LVDS1
+    MONITOR2=VGA1
 else
     echo "ERROR: Unrecognised host to get monitors, expected acer/x230"
     return -1
@@ -25,7 +25,7 @@ ActivateMain() {
 }
 ActivateLaptop() {
     echo "Activate laptop"
-    xrandr --output $MONITOR1 --off --output $MONITOR2 --auto
+    xrandr --output $MONITOR2 --off --output $MONITOR1 --auto
 }
 
 # functions to check if VGA is connected and in use

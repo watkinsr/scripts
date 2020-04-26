@@ -7,7 +7,7 @@ title="Command: "
 sizeArgs=${#args}
 sizeTitle=${#title}
 size=$(( sizeArgs > sizeTitle ? sizeArgs : sizeTitle ))
-width=$((8 * size))
+width=$((20 * size))
 height=20
 
 Xaxis=$(xrandr --current | grep '*' | uniq | awk '{print $1}' | cut -d 'x' -f1)
@@ -23,7 +23,7 @@ Yaxis=$(xrandr --current | grep '*' | uniq | awk '{print $1}' | cut -d 'x' -f2)
 Y=$(($Yaxis/2 - $(($Yaxis/$height))))
 
 # Notify the command
-{ echo $title; echo $args; } | dzen2 -p 1 -w $width -h $height -l 1 -x $X -y $Y -ta c -sa c -e 'onstart=uncollapse' -fn Iosevka-Slab -bg black &
+echo $title $args | dzen2 -p 1 -w $width -h $height -l 1 -x $X -y $Y -ta c -sa c -e 'onstart=uncollapse' -bg black &
 
 # Do the command
 $args

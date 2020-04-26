@@ -6,9 +6,11 @@ do
    if [ $HOST = "x230.home" ]; then
         CPU=$(top -b -n1 | grep "CPUs" | awk 'NR==1{print $3}' | tr -d '\n')
         BAT=$(apm | awk 'NR==1{print $4 " " $6 " " $7}')
-        STATUS="Cpu: $CPU | Bat: $BAT"
-        # echo $STATUS;
-        sleep 1;
+	TIME=$(date '+%Y %b %d (%a) %I:%M%p')
+	WEATHER1=$( weather )
+        STATUS="Cpu: $CPU | Bat: $BAT| $TIME | $WEATHER1"
+	xsetroot -name "$STATUS"
+        sleep 2;
     else
         CPU=$(top -b -n1 | grep "Cpu(s)" | awk '{print $2 + $4}' | tr -d '\n')
 	MEM=$(free -h | sed -n '2{p;q}' | awk '{print $3 "/" $2}')
