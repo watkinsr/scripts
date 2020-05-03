@@ -1,17 +1,17 @@
-#!/bin/ksh
+#!/bin/sh
 
 HOST=$(uname -n)
 while true
 do
-   if [ $HOST = "x230.home" ]; then
-        CPU=$(top -b -n1 | grep "CPUs" | awk 'NR==1{print $3}' | tr -d '\n')
-        BAT=$(apm | awk 'NR==1{print $4 " " $6 " " $7}')
+   if [ $HOST = "x230" ]; then
+	CPU=$(ps -o %cpu -p `pgrep -S idle` | awk 'NR==2{printf("CPU: %.2f%s" ,400 / $1, "%")}')
+    BAT=$(apm | awk 'NR==5{printf("BAT: %s", $4)}')
 	TIME=$(date '+%Y %b %d (%a) %I:%M%p')
 	WEATHER1=$( weather )
-        STATUS="Cpu: $CPU | Bat: $BAT| $TIME | $WEATHER1"
+    STATUS="$CPU | $BAT | $TIME | $WEATHER1"
 	xsetroot -name "$STATUS"
-        sleep 2;
-    else
+    sleep 2;
+   else
         CPU=$(top -b -n1 | grep "Cpu(s)" | awk '{print $2 + $4}' | tr -d '\n')
 	MEM=$(free -h | sed -n '2{p;q}' | awk '{print $3 "/" $2}')
 	TIME=$(date '+%Y %b %d (%a) %I:%M%p')
