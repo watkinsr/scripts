@@ -1,4 +1,4 @@
-#!/bin/ksh
+#!/bin/sh
 
 # default monitor is LVDS-1
 
@@ -9,10 +9,10 @@ if [ $HOST == "acer-void" ]; then
     echo "Acer detected"
     MONITOR1=eDP1
     MONITOR2=HDMI2
-elif [ $HOST == "x230.home" ]; then
+elif [ $HOST == "x230" ]; then
     echo "X230 detected"
-    MONITOR1=LVDS1
-    MONITOR2=VGA1
+    MONITOR1=LVDS-1
+    MONITOR2=VGA-1
 else
     echo "ERROR: Unrecognised host to get monitors, expected acer/x230"
     return -1
