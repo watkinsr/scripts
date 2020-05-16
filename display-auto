@@ -5,7 +5,7 @@
 HOST=$(uname -n)
 echo $HOST
 
-if [ $HOST == "acer-void" ]; then
+if [ $HOST == "acer" ]; then
     echo "Acer detected"
     MONITOR1=eDP1
     MONITOR2=HDMI2
@@ -21,7 +21,11 @@ fi;
 # functions to switch from laptop to main monitor and vice versa
 ActivateMain() {
     echo "Activate main"
-    xrandr --output $MONITOR2 --auto --output $MONITOR1 --off
+    if [ $HOST = "acer" ]; then
+        xrandr --output $MONITOR2 --auto --rotate left --output $MONITOR1 --off
+    else
+        xrandr --output $MONITOR2 --auto --output $MONITOR1 --off
+    fi;
 }
 ActivateLaptop() {
     echo "Activate laptop"
