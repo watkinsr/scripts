@@ -10,20 +10,35 @@ size=$(( sizeArgs > sizeTitle ? sizeArgs : sizeTitle ))
 width=$((20 * size))
 height=20
 
-Xaxis=$(xrandr --current | grep '*' | uniq | awk '{print $1}' | cut -d 'x' -f1)
-xAdjust=$(echo $( echo "$(echo "$width / $Xaxis" | bc -l) * $(( $Xaxis / 2 ))" | bc -l) | awk '{print int($1+0.5)}')
+x_axis=$(xrandr --current | awk 'NR==1{print $8}')
+x_adjust=$(echo $( echo "$(echo "$width / $x_axis" | bc -l) * $(( $x_axis/ 2 ))" | bc -l) | awk '{print int($1+0.5)}')
+echo "x_axis: $x_axis"
+echo "x_adjust: $x_adjust"
 
-# echo $var | awk '{print int($1+0.5)}'
+x=$(($x_axis/2  - $x_adjust))
+echo "x: $x"
 
-X=$(($Xaxis/2  - $xAdjust))
 
-# echo $xAdjust
+y_axis=$(xrandr --current | awk 'NR==1{print $10}' | sed 's/,//')
+echo "y_axis: $y_axis"
 
-Yaxis=$(xrandr --current | grep '*' | uniq | awk '{print $1}' | cut -d 'x' -f2)
-Y=$(($Yaxis/2 - $(($Yaxis/$height))))
+y=$(($y_axis / 2 - $(($y_axis/$height))))
 
-# Notify the command
-echo $title $args | dzen2 -p 1 -w $width -h $height -l 1 -x $X -y $Y -ta c -sa c -e 'onstart=uncollapse' -bg black &
+echo "y: $y"
 
-# Do the command
-$args
+program=$1
+
+if [ -n "$(command -v dzen2)" ]; then
+    if [ -n "$(command -v $program)" ]; then
+
+        # Notify the command
+        echo $title $args | dzen2 -p 1 -w $width -h $height -l 1 -x $x -y $y -ta c -sa c -e 'onstart=uncollapse' -bg black &
+
+        # Do the command
+        $args
+    else
+        echo "ERROR: need $program to use this script"
+    fi
+else
+    echo "ERROR: need dzen2 to use this script"
+fi
