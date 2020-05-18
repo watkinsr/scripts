@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# Restart synergy if running or start it a-fresh
+
+if [ -n $(ps cax  | grep synergys) ]; then
+    echo "Starting synergys a-fresh"
+	cmd synergys --config $HOME/barrier.conf;
+else
+    echo "Killing synergy"
+	pkill -9 synergys
+	cmd synergys --config $HOME/barrier.conf;
+fi
+
