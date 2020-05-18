@@ -4,11 +4,10 @@ HOST=$(uname -n)
 while true
 do
    if [ $HOST = "x230" ]; then
-	CPU=$(ps -o %cpu -p `pgrep -S idle` | awk 'NR==2{printf("CPU: %.2f%s" ,400 / $1, "%")}')
     BAT=$(apm | awk 'NR==5{printf("BAT: %s", $4)}')
 	TIME=$(date '+%Y %b %d (%a) %I:%M%p')
 	WEATHER1=$( weather )
-    STATUS="$CPU | $BAT | $TIME | $WEATHER1"
+    STATUS="$BAT | $TIME | $WEATHER1"
 	xsetroot -name "$STATUS"
     sleep 2;
    else
