@@ -1,9 +1,0 @@
-#!/bin/sh
-
-echo "LOG: $1"
-if [ -n $(command -v xclip) ];
-then
-    cmd youtube-dl --rm-cache-dir -o - $(xclip -out) | mpv -
-else
-    echo "Please install xclip to get clipboard output"
-fi
