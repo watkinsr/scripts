@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# Draw a terminal from my t60 thinkpad
+
+DRAWTERM_DIR=$HOME/Git/Projects/system/drawterm
+if [ -f $DRAWTERM_DIR/drawterm ]; then
+    echo "Found drawterm"
+    $DRAWTERM_DIR/drawterm -a 9front -h t60 -u glenda
+else
+    echo "Please compile a drawterm in $DRAWTERM_DIR"
+fi
