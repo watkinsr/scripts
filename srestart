@@ -2,12 +2,16 @@
 
 # Restart synergy if running or start it a-fresh
 
-if [ -n $(ps cax  | grep synergys) ]; then
-    echo "Starting synergys a-fresh"
-	cmd synergys --config $HOME/barrier.conf;
-else
-    echo "Killing synergy"
-	pkill -9 synergys
-	cmd synergys --config $HOME/barrier.conf;
-fi
+DISPLAY=:0
+HOST=$(uname -n)
+SHOST=192.168.1.72
 
+if [ $HOST = "x230" ]; then
+	doas pkill -9 synergyc
+	synergyc -f $SHOST > $HOME/synergy.log
+	msg "Restarted synergyc"
+else
+	doas pkill -9 synergys
+	cmd synergys --config $HOME/barrier.conf;
+	msg "Restarted synergys"
+fi
