@@ -2,4 +2,4 @@
 
 # Do the command and notify what it was
 args=`xclip -o -selection clipboard`
-cmd mpv --volume-max=1000 $args --input-ipc-server=/tmp/mpvsocket &
+cmd mpv --volume-max=1000 --load-unsafe-playlists $args --input-ipc-server=/tmp/mpvsocket &
